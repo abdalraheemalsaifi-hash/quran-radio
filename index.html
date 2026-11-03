@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>إذاعة القرآن الكريم من الدوحة</title>
+<meta name="description" content="أصوات القرّاء القطريين وكبار قرّاء العالم العربي على رفّ واحد: استمع، تصفّح السور، واختبر أذنك.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Amiri:wght@400;700&display=swap">
+<style>
+/* Layout: a sticky top bar, two cassette shelves (Qatar first), an about band, a quiz, and a fixed player at the bottom. */
+:root{
+  --bg:#f6f3ee;          /* pearl */
+  --surface:#fffdf9;
+  --ink:#24131a;
+  --muted:#6f5d63;
+  --line:#e4dcd3;
+  --maroon:#8a1538;      /* Qatar maroon */
+  --maroon-ink:#ffffff;
+  --gold:#b88a3e;
+  --wood-a:#a87447; --wood-b:#7d4f2a; --wood-c:#5b3519;
+  --shadow:0 10px 30px -12px rgba(60,20,30,.35);
+  --display:"Reem Kufi","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+  --quran:"Amiri","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#170d11; --surface:#21141a; --ink:#f3e9ec; --muted:#b9a6ad; --line:#3a2830;
+    --maroon:#c23a5f; --maroon-ink:#ffffff; --gold:#d6ad62;
+    --wood-a:#7a5232; --wood-b:#5a381d; --wood-c:#3d230f;
+    --shadow:0 10px 30px -12px rgba(0,0,0,.7); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#170d11; --surface:#21141a; --ink:#f3e9ec; --muted:#b9a6ad; --line:#3a2830;
+  --maroon:#c23a5f; --maroon-ink:#ffffff; --gold:#d6ad62;
+  --wood-a:#7a5232; --wood-b:#5a381d; --wood-c:#3d230f;
+  --shadow:0 10px 30px -12px rgba(0,0,0,.7); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;padding-bottom:120px}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.25}
+.eyebrow{font-size:.85rem;color:var(--maroon);font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:.5rem}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--maroon)}
+
+/* top bar */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.7rem}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.brand svg{width:34px;height:34px;color:var(--maroon)}
+.brand b{font-family:var(--display);font-size:1.15rem;display:block;line-height:1.2}
+.brand small{color:var(--muted);font-size:.75rem}
+nav.links{display:flex;gap:.25rem;border:1px solid var(--line);border-radius:999px;padding:.25rem;background:var(--surface)}
+nav.links a{white-space:nowrap;text-decoration:none;font-size:.9rem;padding:.35rem .9rem;border-radius:999px;color:var(--muted)}
+nav.links a:hover{background:var(--bg);color:var(--ink)}
+.top-actions{display:flex;gap:.5rem;align-items:center}
+.btn{border:0;border-radius:999px;padding:.55rem 1.1rem;font-weight:700;display:inline-flex;align-items:center;gap:.5rem;font-size:.92rem}
+.btn-live{background:var(--ink);color:var(--bg)}
+.btn-live .dot{width:8px;height:8px;border-radius:50%;background:#e23b3b}
+.btn-live.on .dot{animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.icon-btn{background:transparent;border:1px solid var(--line);width:38px;height:38px;border-radius:50%;display:grid;place-items:center}
+.btn,.brand b{white-space:nowrap}
+@media (max-width:1100px){nav.links{display:none}}
+
+/* hero */
+.hero{padding-block:2.5rem 1rem;text-align:center}
+.hero h1{font-size:clamp(2.2rem,6vw,4.2rem);font-weight:700}
+.hero h1 span{color:var(--maroon)}
+.hero p{color:var(--muted);max-width:56ch;margin:.75rem auto 0}
+.hero .eyebrow{justify-content:center}
+.search{margin:1.5rem auto 0;max-width:420px;position:relative}
+.search input{width:100%;padding:.75rem 1.1rem;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+
+/* shelves */
+.shelf-block{padding-block:2rem 1rem}
+.shelf-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.shelf-head h2{font-size:clamp(1.5rem,3.4vw,2.2rem)}
+.shelf-head p{margin:.25rem 0 0;color:var(--muted)}
+.count{font-family:var(--display);color:var(--muted);font-size:.95rem}
+/* every wrapped row of tapes sits on its own plank: the plank is a repeating background with the row pitch */
+.shelf{--tw:178px;--th:calc(var(--tw) / 1.55);--pad:22px;--plank:20px;--gap:58px;--pitch:calc(var(--th) + var(--gap))}
+.tapes{display:flex;flex-wrap:wrap;gap:var(--gap) 1rem;justify-content:center;padding:var(--pad) .5rem var(--plank);
+  background:linear-gradient(180deg,transparent 0 var(--th),var(--wood-a) var(--th),var(--wood-b) calc(var(--th) + 13px),var(--wood-c) calc(var(--th) + var(--plank)),transparent calc(var(--th) + var(--plank)));
+  background-size:100% var(--pitch);background-position:0 var(--pad);border-radius:4px}
+@media (max-width:560px){.shelf{--tw:140px;--gap:46px}}
+
+/* cassette */
+.tape{--c:var(--maroon);width:var(--tw,178px);height:var(--th,115px);flex:none;border:0;padding:0;background:none;position:relative;transition:transform .25s ease;text-align:right}
+.tape:hover,.tape:focus-visible{transform:translateY(-10px) rotate(-1.5deg)}
+.tape.active{transform:translateY(-14px)}
+.tape .shell{position:absolute;inset:0;border-radius:9px;background:linear-gradient(160deg,#2b2326,#121012);box-shadow:var(--shadow),inset 0 0 0 2px rgba(255,255,255,.06)}
+.tape .label{position:absolute;inset:8px 8px 33%;border-radius:5px;background:var(--c);color:#fff;padding:.3rem .5rem 9px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:1px}
+.tape .label::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.95) 0 9px,transparent 9px 12px);opacity:.9;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+/* names up to two lines; long names drop a size so the tagline under them stays visible */
+.tape .name{font-family:var(--display);font-weight:700;font-size:max(9px, calc(var(--tw,178px) * .09));line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tape.long .name{font-size:calc(var(--tw,178px) * .077)}
+.tape .tag{font-size:calc(var(--tw,178px) * .06);line-height:1.3;opacity:.9;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* reciter photo (img/<id>.jpg) sits at the label's left; text keeps clear of it once the photo loads */
+.tape .ph{position:absolute;left:6px;top:calc(50% - 4px);transform:translateY(-50%);width:calc(var(--tw,178px) * .28);aspect-ratio:1;border-radius:50%;object-fit:cover;object-position:center 20%;border:2px solid rgba(255,255,255,.85);background:rgba(255,255,255,.15)}
+.tape .label.has-ph{padding-left:calc(var(--tw,178px) * .28 + 12px)}
+.dph{width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:center 20%;border:3px solid var(--maroon);display:block}
+.tape .window{position:absolute;left:22%;right:22%;bottom:12%;height:24%;border-radius:20px;background:#0b0a0b;display:flex;justify-content:space-between;align-items:center;padding:0 8%}
+.reel{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#0b0a0b 0 4px,#e9e4dc 4px 6px,#6d6466 6px);position:relative}
+.reel::after{content:"";position:absolute;inset:3px;border-radius:50%;border:2px dashed rgba(255,255,255,.55)}
+.tape.playing .reel{animation:spin 1.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tape .flag{position:absolute;top:-10px;left:10px;background:var(--surface);color:var(--ink);border:1px solid var(--line);font-size:.65rem;border-radius:999px;padding:0 .5rem;font-weight:700}
+.tape .fav{position:absolute;top:-10px;right:10px;width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:none;place-items:center;font-size:.75rem;color:var(--maroon)}
+.tape.is-fav .fav{display:grid}
+.empty{color:var(--muted);text-align:center;padding:1rem}
+
+/* about */
+.about{margin-block:3rem;background:var(--maroon);color:var(--maroon-ink);border-radius:20px;position:relative;overflow:hidden}
+.about .inner{display:grid;grid-template-columns:1fr 1.4fr;gap:2rem;padding:2.5rem}
+.about h2{font-size:clamp(1.8rem,4vw,2.8rem)}
+.about p{margin:0;max-width:62ch;opacity:.95}
+.about .verse{font-family:var(--quran);font-size:1.6rem;line-height:1.9;margin-top:1rem;opacity:.95}
+.about::after{content:"";position:absolute;inset:auto -40px -40px auto;width:220px;height:220px;opacity:.12;background:repeating-conic-gradient(from 0deg,#fff 0 10deg,transparent 10deg 20deg);border-radius:50%}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+.facts div{border-top:1px solid rgba(255,255,255,.35);padding-top:.5rem}
+.facts b{font-family:var(--display);font-size:1.6rem;display:block;font-variant-numeric:tabular-nums}
+.facts span{font-size:.85rem;opacity:.85}
+@media (max-width:760px){.about .inner{grid-template-columns:1fr;padding:1.75rem}.facts{grid-template-columns:1fr 1fr 1fr}}
+
+/* live stations */
+.stations{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.75rem}
+.station{display:flex;align-items:center;gap:.75rem;padding:.8rem 1rem;border:1px solid var(--line);background:var(--surface);border-radius:14px;text-align:right}
+.station:hover{border-color:var(--maroon)}
+.station .ic{width:38px;height:38px;flex:none;border-radius:50%;background:var(--maroon);color:#fff;display:grid;place-items:center}
+.station b{display:block;font-size:.95rem}
+.station small{color:var(--muted)}
+.station.on{border-color:var(--maroon);box-shadow:inset 0 0 0 1px var(--maroon)}
+
+/* quiz */
+.quiz{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:2rem;display:grid;grid-template-columns:1fr 1.3fr;gap:2rem;align-items:start}
+.quiz h2{font-size:clamp(1.6rem,3.6vw,2.4rem)}
+.quiz p{color:var(--muted)}
+.score{display:flex;gap:1.5rem;margin-top:1rem}
+.score div b{font-family:var(--display);font-size:2rem;color:var(--maroon);display:block;font-variant-numeric:tabular-nums}
+.score div span{font-size:.85rem;color:var(--muted)}
+.qbox{background:var(--bg);border-radius:14px;padding:1.25rem;min-height:250px;display:flex;flex-direction:column;gap:1rem}
+.qmeta{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;gap:1rem;flex-wrap:wrap}
+.qbar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.qbar i{display:block;height:100%;width:0;background:var(--maroon);transition:width .2s linear}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.choice{padding:.85rem;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-family:var(--quran);font-size:1.3rem;font-weight:700}
+.choice:hover:not(:disabled){border-color:var(--maroon)}
+.choice.right{background:#1f7a4d;color:#fff;border-color:#1f7a4d}
+.choice.wrong{background:#b3261e;color:#fff;border-color:#b3261e}
+.choice:disabled{cursor:default}
+.qmsg{min-height:1.7em;font-weight:700}
+.btn-primary{background:var(--maroon);color:#fff}
+@media (max-width:760px){.quiz{grid-template-columns:1fr;padding:1.25rem}}
+
+section.block{padding-block:2.5rem}
+section.block > .wrap > h2{font-size:clamp(1.5rem,3.4vw,2.2rem);margin-bottom:.35rem}
+section.block > .wrap > p.sub{color:var(--muted);margin:0 0 1.25rem}
+
+footer{padding-block:2rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);margin-top:2rem}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* drawer: surah list */
+.drawer{position:fixed;inset:0;z-index:40;display:flex;justify-content:flex-start}
+.drawer[hidden]{display:none!important}
+.drawer .scrim{position:absolute;inset:0;background:rgba(10,4,7,.45)}
+.drawer .panel{position:relative;width:min(440px,100%);height:100%;background:var(--surface);display:flex;flex-direction:column;box-shadow:var(--shadow);animation:slide .25s ease;padding-top:env(safe-area-inset-top,0px)}
+@keyframes slide{from{transform:translateX(-30px);opacity:0}}
+.panel-head{padding:1.25rem;border-bottom:1px solid var(--line);display:flex;gap:1rem;align-items:flex-start}
+.panel-head .mini{width:84px;flex:none}
+.panel-head h3{font-size:1.4rem}
+.panel-head p{margin:.2rem 0 0;color:var(--muted);font-size:.9rem}
+.panel-tools{display:flex;gap:.5rem;padding:.75rem 1.25rem;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.panel-tools select,.panel-tools input{flex:1 1 150px;min-width:0;padding:.5rem .75rem;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:.9rem}
+.surahs{list-style:none;margin:0;padding:.5rem;overflow:auto;flex:1}
+.surahs button{width:100%;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:.75rem;padding:.55rem .75rem;border:0;background:none;border-radius:10px;text-align:right}
+.surahs button:hover{background:var(--bg)}
+.surahs button.cur{background:color-mix(in srgb,var(--maroon) 12%,transparent)}
+.surahs .no{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.85rem;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;transform:rotate(45deg)}
+.surahs .no i{transform:rotate(-45deg);font-style:normal}
+.surahs .sn{font-family:var(--quran);font-size:1.25rem;font-weight:700}
+.surahs .pl{color:var(--muted);font-size:.8rem}
+
+/* player */
+.player{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -10px 30px -18px rgba(0,0,0,.4);padding-bottom:env(safe-area-inset-bottom,0px)}
+.player .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) auto minmax(0,1.4fr) auto;gap:1rem;align-items:center;padding-block:.7rem}
+.now{display:flex;gap:.75rem;align-items:center;min-width:0}
+.now .art{width:46px;height:46px;flex:none;border-radius:10px;background:var(--maroon);display:grid;place-items:center;color:#fff;font-family:var(--display);font-size:1.2rem}
+.now .art.spin{animation:spin 6s linear infinite;border-radius:50%}
+.now div{min-width:0}
+.now b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--quran);font-size:1.15rem}
+.now small{display:block;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.controls{display:flex;gap:.4rem;align-items:center}
+.controls .play{width:48px;height:48px;border-radius:50%;background:var(--maroon);color:#fff;border:0;display:grid;place-items:center}
+.seek{display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.seek input{flex:1;accent-color:var(--maroon);min-width:0}
+.extra{display:flex;gap:.4rem;align-items:center}
+.extra input{width:80px;accent-color:var(--maroon)}
+@media (max-width:860px){
+  .player .wrap{grid-template-columns:minmax(0,1fr) auto;gap:.5rem .75rem}
+  .seek{grid-column:1/-1;order:3}
+  .extra{display:none}
+}
+.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.5rem 1rem;border-radius:999px;font-size:.9rem;z-index:50}
+svg.i{width:20px;height:20px;fill:currentColor}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="إذاعة القرآن الكريم من الدوحة">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path fill="currentColor" d="M20 4 6 12v4h28v-4L20 4Zm-11 14v14h4V18H9Zm9 0v14h4V18h-4Zm9 0v14h4V18h-4ZM6 34v2h28v-2H6Z"/></svg>
+      <span><b>إذاعة القرآن الكريم</b><small>من الدوحة · قطر</small></span>
+    </a>
+    <nav class="links" aria-label="أقسام الموقع">
+      <a href="#qatar">القرّاء القطريون</a>
+      <a href="#arab">قرّاء العالم العربي</a>
+      <a href="#sham">بلاد الشام</a>
+      <a href="#live">البث المباشر</a>
+      <a href="#quiz">الاختبار</a>
+      <a href="#about">عن الإذاعة</a>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" aria-label="تبديل المظهر" title="تبديل المظهر">
+        <svg class="i" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      </button>
+      <button class="btn btn-live" id="liveBtn"><span class="dot"></span>على الهواء</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="eyebrow">من الدوحة، على مدار الساعة</div>
+    <h1>إذاعة <span>القرآن الكريم</span></h1>
+    <p>رفّ من الأشرطة يبدأ بأصوات قطر ثم كبار قرّاء العالم العربي. اضغط أي شريط لتسمع، واختر السورة التي تريد.</p>
+    <div class="search">
+      <label for="q" class="sr" hidden>ابحث عن قارئ</label>
+      <input id="q" type="search" placeholder="ابحث عن قارئ…" autocomplete="off">
+    </div>
+  </section>
+
+  <section class="shelf-block" id="qatar">
+    <div class="wrap">
+      <div class="shelf-head">
+        <div>
+          <div class="eyebrow">الرفّ الأول</div>
+          <h2>أصوات من قطر</h2>
+          <p>قرّاء أمّوا المصلّين في مساجد الدوحة وحملت الإذاعة تلاواتهم.</p>
+        </div>
+        <span class="count" id="qatarCount"></span>
+      </div>
+      <div class="shelf" id="qatarShelf"></div>
+    </div>
+  </section>
+
+  <section class="shelf-block" id="arab">
+    <div class="wrap">
+      <div class="shelf-head">
+        <div>
+          <div class="eyebrow">الرفّ الثاني</div>
+          <h2>كبار قرّاء العالم العربي</h2>
+          <p>من دولة التلاوة المصرية إلى أئمة الحرمين وأصوات الخليج.</p>
+        </div>
+        <span class="count" id="arabCount"></span>
+      </div>
+      <div class="shelf" id="arabShelf"></div>
+    </div>
+  </section>
+
+  <section class="shelf-block" id="sham">
+    <div class="wrap">
+      <div class="shelf-head">
+        <div>
+          <div class="eyebrow">الرفّ الثالث</div>
+          <h2>أصوات من بلاد الشام</h2>
+          <p>من القدس ودمشق وعمّان، أداء شامي عريق وعلماء قراءات.</p>
+        </div>
+        <span class="count" id="shamCount"></span>
+      </div>
+      <div class="shelf" id="shamShelf"></div>
+    </div>
+  </section>
+
+  <section class="block" id="live">
+    <div class="wrap">
+      <h2>البث المباشر</h2>
+      <p class="sub">محطات تبث على مدار الساعة. اختر محطة واستمع فورًا.</p>
+      <div class="stations" id="stations"></div>
+    </div>
+  </section>
+
+  <section class="block" id="quiz">
+    <div class="wrap">
+      <div class="quiz">
+        <div>
+          <div class="eyebrow">الاختبار</div>
+          <h2>أيّ سورة تسمع؟</h2>
+          <p>نشغّل لك مطلع سورة من جزء عمّ بصوت أحد قرّاء الرفّ. اختر اسمها من أربعة خيارات قبل أن ينتهي المقطع. عشر جولات في كل مرة.</p>
+          <div class="score">
+            <div><b id="sRight">٠</b><span>إجابة صحيحة</span></div>
+            <div><b id="sRound">٠/١٠</b><span>الجولة</span></div>
+            <div><b id="sBest">٠</b><span>أفضل نتيجة</span></div>
+          </div>
+        </div>
+        <div class="qbox" aria-live="polite">
+          <div class="qmeta"><span id="qReciter">اضغط «ابدأ» لتسمع المقطع الأول</span><span id="qTime"></span></div>
+          <div class="qbar"><i id="qBar"></i></div>
+          <div class="choices" id="choices"></div>
+          <div class="qmsg" id="qMsg"></div>
+          <div><button class="btn btn-primary" id="qStart">ابدأ الاختبار</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="about">
+    <div class="about">
+      <div class="inner">
+        <div>
+          <div class="eyebrow" style="color:#fff">عن الإذاعة</div>
+          <h2>صوت القرآن في كل بيت</h2>
+          <p class="verse">﴿ وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا ﴾</p>
+        </div>
+        <div>
+          <p>إذاعة رقمية تجمع تلاوات القرّاء القطريين أولًا، ثم كبار قرّاء العالم العربي، في مكان واحد. كل شريط على الرفّ مصحف كامل أو شبه كامل بصوت قارئه، تختار منه السورة وتستمع مباشرة، ومعه محطات بثّ لا تتوقف.</p>
+          <div class="facts">
+            <div><b id="fReciters">٠</b><span>قارئًا على الرفّ</span></div>
+            <div><b>١١٤</b><span>سورة لكل قارئ</span></div>
+            <div><b id="fStations">٠</b><span>محطة بث مباشر</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>إذاعة القرآن الكريم من الدوحة</span>
+    <span>التلاوات والبث من <a href="https://mp3quran.net" target="_blank" rel="noopener">mp3quran.net</a> · صور القرّاء من <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">ويكيميديا كومنز</a> و<a href="https://www.assabile.com" target="_blank" rel="noopener">Assabile</a></span>
+  </div>
+</footer>
+
+<!-- surah drawer -->
+<div class="drawer" id="drawer" hidden>
+  <div class="scrim" data-close></div>
+  <aside class="panel" role="dialog" aria-modal="true" aria-labelledby="dName">
+    <div class="panel-head">
+      <div class="mini" id="dTape"></div>
+      <div style="flex:1;min-width:0">
+        <h3 id="dName"></h3>
+        <p id="dBio"></p>
+        <div style="display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap">
+          <button class="btn btn-primary" id="dRadio" style="padding:.4rem .9rem;font-size:.85rem">إذاعته المباشرة</button>
+          <button class="btn" id="dFav" style="padding:.4rem .9rem;font-size:.85rem;border:1px solid var(--line);background:none">أضف للمفضلة</button>
+        </div>
+      </div>
+      <button class="icon-btn" data-close aria-label="إغلاق">✕</button>
+    </div>
+    <div class="panel-tools">
+      <select id="dMoshaf" aria-label="الرواية"></select>
+      <input id="dFilter" type="search" placeholder="ابحث عن سورة…" aria-label="ابحث عن سورة">
+    </div>
+    <ul class="surahs" id="surahList"></ul>
+  </aside>
+</div>
+
+<!-- player -->
+<div class="player" id="player">
+  <div class="wrap">
+    <div class="now">
+      <div class="art" id="pArt">ق</div>
+      <div><b id="pTitle">اختر شريطًا لتبدأ</b><small id="pSub">إذاعة القرآن الكريم من الدوحة</small></div>
+    </div>
+    <div class="controls">
+      <button class="icon-btn" id="pNext" aria-label="السورة التالية" title="التالية"><svg class="i" viewBox="0 0 24 24"><path d="M18 6h2v12h-2zM4 18l10-6L4 6z" transform="matrix(-1 0 0 1 24 0)"/></svg></button>
+      <button class="play" id="pPlay" aria-label="تشغيل"><svg class="i" id="pIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      <button class="icon-btn" id="pPrev" aria-label="السورة السابقة" title="السابقة"><svg class="i" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z" transform="matrix(-1 0 0 1 24 0)"/></svg></button>
+    </div>
+    <div class="seek">
+      <span id="pCur">٠:٠٠</span>
+      <input type="range" id="pSeek" min="0" max="1000" value="0" aria-label="موضع التشغيل">
+      <span id="pDur">٠:٠٠</span>
+    </div>
+    <div class="extra">
+      <button class="icon-btn" id="pList" aria-label="قائمة السور" title="قائمة السور"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h10v2H4z"/></svg></button>
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+      <input type="range" id="pVol" min="0" max="1" step="0.05" value="0.9" aria-label="مستوى الصوت">
+    </div>
+  </div>
+</div>
+
+<audio id="audio" preload="none"></audio>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const CDN = "https://cdn.mp3quran.net/audio/";
+const RADIO = "https://backup.qurango.net/radio/";
+const RADIO_ALT = "https://qurango.net/radio/";
+
+/* Reciters. Qatar shelf first. Audio paths come from the mp3quran.net v3 API.
+   verified:false marks a Qatar link we have not confirmed yet; check before launch. */
+const RECITERS = [
+  // ——— قطر ———
+  {id:"sufi", shelf:"qatar", name:"عبدالرشيد صوفي", tag:"إمام مسجد أنس بن مالك بالدوحة", bio:"قارئ مُجاز بالقراءات، استقرّ في قطر منذ عام ١٩٩١ ويؤمّ المصلّين في مسجد أنس بن مالك بالدوحة. له ثلاثة مصاحف كاملة بثلاث روايات.", color:"#8a1538", verified:true,
+    moshaf:[["حفص عن عاصم","abdulrasheed-sufi/r3/"],["السوسي عن أبي عمرو","abdulrasheed-sufi/r2/"],["خلف عن حمزة","abdulrasheed-sufi/r1/"]], radio:"abdulrasheed_soufi_assosi"},
+  {id:"majed", shelf:"qatar", name:"عبدالرحمن الماجد", tag:"ترتيل هادئ بنبرة خليجية", bio:"مصحف مرتل كامل برواية حفص عن عاصم.", color:"#6e1230", verified:false,
+    moshaf:[["حفص عن عاصم","abdulrahman-majed/r1/"]], radio:"abdulrahman_almajed"},
+  {id:"hajri", shelf:"qatar", name:"فيصل الهاجري", tag:"المصحف المرتل", bio:"مصحف مرتل كامل برواية حفص عن عاصم.", color:"#9b2a48", verified:false,
+    moshaf:[["حفص عن عاصم","faisal-hajri/r1/"]]},
+  {id:"jaber", shelf:"qatar", name:"مال الله الجابر", tag:"قارئ قطري", bio:"قارئ قطري، له مصحف مرتل كامل برواية حفص عن عاصم.", color:"#5a1027", verified:true,
+    moshaf:[["حفص عن عاصم","malallah-jaber/r1/"]]},
+  {id:"noah", shelf:"qatar", name:"يوسف بن نوح أحمد", tag:"صوت خاشع", bio:"مصحف مرتل كامل برواية حفص عن عاصم.", color:"#7a2e3f", verified:false,
+    moshaf:[["حفص عن عاصم","yousef-ahmad/r1/"]], radio:"yousef_bin_noah_ahmad"},
+
+  // ——— العالم العربي ———
+  {id:"abdulbasit", shelf:"arab", name:"عبدالباسط عبدالصمد", tag:"الحنجرة الذهبية · مصر", bio:"من أشهر أصوات دولة التلاوة المصرية، طاف صوته العالم بالمجوّد والمرتل.", color:"#1f4e5f",
+    moshaf:[["حفص · مرتل","abdulbasit-abdulsamad/r3/"],["حفص · مجوّد","abdulbasit-abdulsamad/r1/"],["ورش عن نافع","abdulbasit-abdulsamad/r2/"]], radio:"abdulbasit_abdulsamad"},
+  {id:"minshawi", shelf:"arab", name:"محمد صديق المنشاوي", tag:"الصوت الباكي · مصر", bio:"صوت عُرف بالخشوع والحزن، وترك مصحفين مرتلًا ومجوّدًا ومصحفًا معلّمًا.", color:"#3d5a40",
+    moshaf:[["حفص · مرتل","muhammad-minshawi/r1/"],["حفص · مجوّد","muhammad-minshawi/r2/"],["المصحف المعلّم","muhammad-minshawi/r3/"]], radio:"mohammed_siddiq_alminshawi"},
+  {id:"husary", shelf:"arab", name:"محمود خليل الحصري", tag:"شيخ عموم المقارئ المصرية", bio:"صاحب أول مصحف مرتل مسجّل، وقرأ بروايات حفص وورش وقالون والدوري.", color:"#4b3b6b",
+    moshaf:[["حفص · مرتل","mahmoud-husary/r1/"],["حفص · مجوّد","mahmoud-husary/r2/"],["ورش عن نافع","mahmoud-husary/r3/"],["الدوري عن أبي عمرو","mahmoud-husary/r4/"],["قالون عن نافع","mahmoud-husary/r5/"]], radio:"mahmoud_khalil_alhussary"},
+  {id:"mustafa", shelf:"arab", name:"مصطفى إسماعيل", tag:"سيّد المقامات · مصر", bio:"اشتهر بتنقّله البارع بين المقامات وطول النفَس في التلاوة المجوّدة.", color:"#7a4a1c",
+    moshaf:[["حفص · مرتل","mustafa-ismail/r1/"],["حفص · مجوّد","mustafa-ismail/r2/"]], radio:"mustafa_ismail"},
+  {id:"banna", shelf:"arab", name:"محمود علي البنا", tag:"رسوخ الأحكام · مصر", bio:"تلاوة متقنة الأحكام بصوت رخيم، مرتلًا ومجوّدًا.", color:"#2e4f73",
+    moshaf:[["حفص · مرتل","mahmoud-banna/r1/"],["حفص · مجوّد","mahmoud-banna/r2/"]], radio:"mahmoud_ali__albanna"},
+  {id:"tablawi", shelf:"arab", name:"محمد محمود الطبلاوي", tag:"آخر العمالقة · مصر", bio:"من آخر جيل الكبار في المدرسة المصرية، بصوت قوي واضح.", color:"#5c3a2e",
+    moshaf:[["حفص · مرتل","muhammad-tablawi/r1/"],["حفص · مجوّد","muhammad-tablawi/r2/"]], radio:"mohammad_altablaway"},
+  {id:"refaat", shelf:"arab", name:"محمد رفعت", tag:"قيثارة السماء · مصر", bio:"أول صوت افتُتحت به الإذاعة المصرية، وما بقي من تسجيلاته نحو ثلاثين سورة.", color:"#3b3b3b",
+    moshaf:[["حفص · مرتل","muhammad-refaat/r1/",[1,10,11,12,17,18,19,20,48,54,55,56,69,72,73,75,76,77,78,79,81,82,83,85,86,87,88,89,96,98,100]]]},
+  {id:"shuraim", shelf:"arab", name:"سعود الشريم", tag:"إمام الحرم المكي سابقًا · السعودية", bio:"ترتيل سريع متقن عُرف به في صلاة التراويح بالمسجد الحرام.", color:"#204a3a",
+    moshaf:[["حفص عن عاصم","saud-shuraim/r1/"]], radio:"saud_alshuraim"},
+  {id:"maher", shelf:"arab", name:"ماهر المعيقلي", tag:"إمام الحرم المكي · السعودية", bio:"صوت هادئ واضح، وله مصحف مرتل ومجوّد ومعلّم.", color:"#2b5d6b",
+    moshaf:[["حفص · مرتل","maher-muaiqly/r1/"],["حفص · مجوّد","maher-muaiqly/r3/"]], radio:"maher"},
+  {id:"yasser", shelf:"arab", name:"ياسر الدوسري", tag:"إمام الحرم المكي · السعودية", bio:"صوت مؤثر اشتهر بتلاواته في صلاتي التراويح والقيام.", color:"#3a4f2a",
+    moshaf:[["حفص عن عاصم","yasser-dosari/r1/"]], radio:"yasser_aldosari"},
+  {id:"nufais", shelf:"arab", name:"أحمد النفيس", tag:"صوت ندي · الكويت", bio:"مصحف مرتل كامل برواية حفص عن عاصم.", color:"#1d3f6e",
+    moshaf:[["حفص عن عاصم","ahmad-nufais/r1/"]]},
+  {id:"kandari", shelf:"arab", name:"عبدالله الكندري", tag:"ترتيل عذب · الكويت", bio:"مصحف مرتل كامل برواية حفص عن عاصم.", color:"#5b4a1f",
+    moshaf:[["حفص عن عاصم","abdullah-kandari/r1/"]], radio:"abdullah_alkandari"},
+  {id:"ghamdi", shelf:"arab", name:"سعد الغامدي", tag:"المصحف المرتل · السعودية", bio:"مصحف مرتل كامل من أكثر المصاحف تداولًا.", color:"#2f5a55",
+    moshaf:[["حفص عن عاصم","saad-ghamdi/r1/"]]},
+  {id:"jibreel", shelf:"arab", name:"محمد جبريل", tag:"صوت القاهرة · مصر", bio:"اشتهر بإمامة التراويح في مسجد عمرو بن العاص بالقاهرة.", color:"#6b3a2a",
+    moshaf:[["حفص عن عاصم","muhammad-jibreel/r1/"]]},
+
+  // ——— بلاد الشام ———
+  {id:"shareef", shelf:"sham", name:"محمد رشاد الشريف", tag:"صوت القدس · فلسطين", bio:"من أشهر أصوات المسجد الأقصى، بأداء مقدسي مميز.", color:"#2f5d3a",
+    moshaf:[["حفص عن عاصم","muhammad-shareef/r1/"]], radio:"mohammad_rashad_alshareef"},
+  {id:"hawwa", shelf:"sham", name:"يحيى حوا", tag:"ترتيل شامي · سوريا", bio:"مصحف مرتل كامل برواية حفص عن عاصم.", color:"#6b2f3a",
+    moshaf:[["حفص عن عاصم","yahya-hawwa/r1/"]], radio:"yahya_hawwa"},
+  {id:"suwaid", shelf:"sham", name:"أيمن رشدي سويد", tag:"شيخ الإقراء · سوريا", bio:"من كبار علماء التجويد والقراءات، وله المصحف المعلّم لتعليم التلاوة.", color:"#2c4a6b",
+    moshaf:[["المصحف المعلّم","https://server15.mp3quran.net/a-rushdi/Almusshaf-Al-Mo-lim/"]]},
+  {id:"abdullah", shelf:"sham", name:"محمد عبدالحكيم العبدالله", tag:"القراءات · سوريا", bio:"مصحفان كاملان بروايتي الدوري عن الكسائي، والبزي وقنبل عن ابن كثير.", color:"#5b4630",
+    moshaf:[["الدوري عن الكسائي","muhammad-abdullah/r2/"],["البزي وقنبل عن ابن كثير","muhammad-abdullah/r1/"]], radio:"mohammad_alabdullah_aldorai"},
+  {id:"kanakeri", shelf:"sham", name:"عبدالهادي كناكري", tag:"صوت دمشقي · سوريا", bio:"مصحف مرتل كامل برواية حفص عن عاصم.", color:"#47365e",
+    moshaf:[["حفص عن عاصم","abdulhadi-kanakeri/r1/"]], radio:"abdulhadi_kanakeri"},
+  {id:"jamal", shelf:"sham", name:"جمال شاكر عبدالله", tag:"ترتيل هادئ · الأردن", bio:"قارئ أردني، له مصحف مرتل كامل برواية حفص عن عاصم.", color:"#7a2a2a",
+    moshaf:[["حفص عن عاصم","jamal-abdullah/r1/"]], radio:"jamal_shaker_abdullah"},
+  {id:"jormy", shelf:"sham", name:"إبراهيم الجرمي", tag:"صوت عمّان · الأردن", bio:"قارئ أردني، له مصحف مرتل كامل برواية حفص عن عاصم.", color:"#2d5550",
+    moshaf:[["حفص عن عاصم","ibrahim-jormy/r1/"]]},
+];
+const srcOf = (r, m, s) => { const p = r.moshaf[m][1]; return (p.startsWith("http") ? p : CDN + p) + pad3(s) + ".mp3"; };
+
+const STATIONS = [
+  {name:"إذاعة متنوعة", sub:"تلاوات لمختلف القرّاء", url:"mix"},
+  {name:"تلاوات خاشعة", sub:"مختارات مؤثرة", url:"salma"},
+  {name:"عبدالرشيد صوفي", sub:"برواية السوسي", url:"abdulrasheed_soufi_assosi"},
+  {name:"عبدالرشيد صوفي", sub:"برواية خلف عن حمزة", url:"abdulrasheed_soufi_khalaf"},
+  {name:"المختصر في التفسير", sub:"تفسير ميسّر للقرآن", url:"mukhtasartafsir"},
+  {name:"المختصر في السيرة", sub:"السيرة النبوية", url:"almukhtasar_fi_alsiyra"},
+];
+RECITERS.filter(r=>r.radio).forEach(r=>{ if(!STATIONS.some(s=>s.url===r.radio)) STATIONS.push({name:r.name, sub:"إذاعة القارئ", url:r.radio}); });
+
+const SURAHS = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
+const MEDINAN = new Set([2,3,4,5,8,9,22,24,33,47,48,49,55,57,58,59,60,61,62,63,64,65,66,76,98,99,110]);
+
+const $ = s => document.querySelector(s);
+const ar = n => String(n).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+const pad3 = n => String(n).padStart(3,"0");
+const fmt = t => !isFinite(t) ? "--:--" : ar(Math.floor(t/60)) + ":" + ar(String(Math.floor(t%60)).padStart(2,"0"));
+const store = {
+  get(k,d){ try{ const v = localStorage.getItem("qdoha:"+k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem("qdoha:"+k, JSON.stringify(v)); }catch(e){} }
+};
+
+/* ---------- theme ---------- */
+const savedTheme = store.get("theme", null);
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+$("#themeBtn").onclick = () => {
+  const dark = document.documentElement.dataset.theme
+    ? document.documentElement.dataset.theme === "dark"
+    : matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = dark ? "light" : "dark";
+  document.documentElement.dataset.theme = next; store.set("theme", next);
+};
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2200); }
+
+/* ---------- cassettes ---------- */
+let favs = new Set(store.get("favs", []));
+/* photos live in img/ named by reciter id; try .jpg, then .png, then .webp, and drop the <img> if none exists */
+const PH_EXT = ["jpg","png","webp"];
+function phTry(img){
+  const i = +img.dataset.i + 1;
+  if(i >= PH_EXT.length){ img.remove(); return; }
+  img.dataset.i = i; img.src = "img/" + img.dataset.id + "." + PH_EXT[i];
+}
+function phImg(id, cls, onload){
+  return `<img class="${cls}" src="img/${id}.jpg" data-id="${id}" data-i="0" alt="" onerror="phTry(this)" onload="${onload}">`;
+}
+function tapeHTML(r, mini){
+  const flag = r.shelf==="qatar" ? "قطر" : "";
+  return `<span class="shell"></span>
+    <span class="label" style="--c:${r.color}">${mini?"":phImg(r.id,"ph","this.parentNode.classList.add('has-ph')")}<span class="name">${r.name}</span>${mini?"":`<span class="tag">${r.tag}</span>`}</span>
+    <span class="window"><span class="reel"></span><span class="reel"></span></span>
+    ${flag && !mini ? `<span class="flag">${flag}</span>`:""}
+    ${mini?"":`<span class="fav" aria-hidden="true">♥</span>`}`;
+}
+function renderShelves(filter=""){
+  const f = filter.trim();
+  ["qatar","arab","sham"].forEach(sh=>{
+    const list = RECITERS.filter(r=>r.shelf===sh && (!f || r.name.includes(f) || r.tag.includes(f)));
+    const host = $("#"+sh+"Shelf");
+    host.innerHTML = "";
+    if(!list.length){ host.innerHTML = `<p class="empty">لا يوجد قارئ بهذا الاسم على هذا الرفّ.</p>`; }
+    if(list.length){
+      const row = document.createElement("div"); row.className="tapes";
+      list.forEach(r=>{
+        const b = document.createElement("button");
+        b.className = "tape" + (r.name.length > 13 ? " long" : "") + (favs.has(r.id)?" is-fav":"") + (cur.r && cur.r.id===r.id ? " active"+(playing?" playing":""):"");
+        b.dataset.id = r.id;
+        b.setAttribute("aria-label", "استمع إلى "+r.name);
+        b.innerHTML = tapeHTML(r);
+        b.onclick = () => openReciter(r);
+        row.appendChild(b);
+      });
+      host.appendChild(row);
+    }
+    $("#"+sh+"Count").textContent = ar(list.length) + " " + (list.length>10 ? "قارئًا" : list.length<3 ? "قارئ" : "قرّاء");
+  });
+}
+$("#q").addEventListener("input", e => renderShelves(e.target.value));
+
+/* ---------- player ---------- */
+const audio = $("#audio");
+audio.volume = +$("#pVol").value;
+let cur = {r:null, m:0, s:1, live:null};
+let playing = false;
+
+function moshafSurahs(r, m){ const mm = r.moshaf[m]; return mm[2] || Array.from({length:114},(_,i)=>i+1); }
+
+function playSurah(r, m, s){
+  stopQuiz(true);
+  cur = {r, m, s, live:null};
+  audio.src = srcOf(r, m, s);
+  audio.play().catch(()=>toast("تعذّر التشغيل، حاول مرة أخرى"));
+  $("#pTitle").textContent = "سورة " + SURAHS[s-1];
+  $("#pSub").textContent = r.name + " · " + r.moshaf[m][0];
+  $("#pArt").textContent = SURAHS[s-1][0];
+  store.set("last", {id:r.id, m, s});
+  markList(); renderShelves($("#q").value); markStations();
+}
+function playLive(url, name, sub){
+  stopQuiz(true);
+  cur = {r:null, m:0, s:1, live:url};
+  liveTries = 0;
+  audio.src = RADIO + url;
+  audio.play().catch(()=>{});
+  $("#pTitle").textContent = name;
+  $("#pSub").textContent = "بث مباشر · " + sub;
+  $("#pArt").textContent = "●";
+  $("#pDur").textContent = "مباشر";
+  renderShelves($("#q").value); markStations();
+}
+function setPlaying(p){
+  playing = p;
+  $("#pIcon").innerHTML = p ? '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>' : '<path d="M8 5v14l11-7z"/>';
+  $("#pPlay").setAttribute("aria-label", p ? "إيقاف مؤقت" : "تشغيل");
+  $("#pArt").classList.toggle("spin", p);
+  $("#liveBtn").classList.toggle("on", p && !!cur.live);
+  document.querySelectorAll(".tape.active").forEach(t=>t.classList.toggle("playing", p));
+}
+audio.addEventListener("play", ()=>setPlaying(true));
+audio.addEventListener("pause", ()=>setPlaying(false));
+audio.addEventListener("timeupdate", ()=>{
+  if(quiz.on) return;
+  $("#pCur").textContent = fmt(audio.currentTime);
+  if(!cur.live && isFinite(audio.duration)){ $("#pDur").textContent = fmt(audio.duration); $("#pSeek").value = audio.currentTime/audio.duration*1000; }
+});
+audio.addEventListener("ended", ()=>{ if(!quiz.on) step(1); });
+// live streams drop now and then: retry once on the main host, then on the backup host again
+let liveTries = 0;
+audio.addEventListener("error", ()=>{
+  if(!audio.src) return;
+  if(cur.live && liveTries < 2){
+    liveTries++;
+    audio.src = (liveTries===1 ? RADIO_ALT : RADIO) + cur.live;
+    audio.play().catch(()=>{});
+    return;
+  }
+  toast(cur.live ? "البث غير متاح الآن، جرّب محطة أخرى" : "تعذّر تحميل التلاوة");
+});
+
+function step(d){
+  if(!cur.r) return;
+  const list = moshafSurahs(cur.r, cur.m);
+  const i = list.indexOf(cur.s) + d;
+  if(i>=0 && i<list.length) playSurah(cur.r, cur.m, list[i]);
+}
+$("#pPlay").onclick = () => {
+  if(!audio.src){ const r = RECITERS[0]; playSurah(r,0,1); return; }
+  audio.paused ? audio.play() : audio.pause();
+};
+$("#pNext").onclick = () => step(1);
+$("#pPrev").onclick = () => step(-1);
+$("#pSeek").oninput = e => { if(!cur.live && isFinite(audio.duration)) audio.currentTime = e.target.value/1000*audio.duration; };
+$("#pVol").oninput = e => audio.volume = +e.target.value;
+$("#pList").onclick = () => cur.r ? openReciter(cur.r) : openReciter(RECITERS[0]);
+$("#liveBtn").onclick = () => {
+  if(cur.live && playing){ audio.pause(); return; }
+  playLive(STATIONS[0].url, "على الهواء", STATIONS[0].sub);
+};
+document.addEventListener("keydown", e=>{
+  if(e.target.matches("input,select,textarea")) return;
+  if(e.code==="Space"){ e.preventDefault(); $("#pPlay").click(); }
+  if(e.key==="Escape") closeDrawer();
+});
+
+/* ---------- drawer ---------- */
+let dr = {r:null, m:0};
+function openReciter(r){
+  dr = {r, m: cur.r && cur.r.id===r.id ? cur.m : 0};
+  // the photo replaces the mini cassette when one exists
+  $("#dTape").innerHTML = phImg(r.id, "dph", "this.nextElementSibling.remove()") + `<div class="tape" style="--tw:84px;--th:54px">${tapeHTML(r,true)}</div>`;
+  $("#dName").textContent = r.name;
+  $("#dBio").textContent = r.bio;
+  $("#dMoshaf").innerHTML = r.moshaf.map((m,i)=>`<option value="${i}">${m[0]}</option>`).join("");
+  $("#dMoshaf").value = dr.m;
+  $("#dRadio").hidden = !r.radio;
+  $("#dFav").textContent = favs.has(r.id) ? "في المفضلة ♥" : "أضف للمفضلة";
+  $("#dFilter").value = "";
+  renderList();
+  $("#drawer").hidden = false;
+  setTimeout(()=>$("#dFilter").focus({preventScroll:true}), 50);
+}
+function closeDrawer(){ $("#drawer").hidden = true; }
+document.querySelectorAll("[data-close]").forEach(el=>el.onclick = closeDrawer);
+$("#dMoshaf").onchange = e => { dr.m = +e.target.value; renderList(); };
+$("#dFilter").oninput = renderList;
+$("#dRadio").onclick = () => { playLive(dr.r.radio, "إذاعة " + dr.r.name, "تلاوات متواصلة"); closeDrawer(); };
+$("#dFav").onclick = () => {
+  const id = dr.r.id;
+  favs.has(id) ? favs.delete(id) : favs.add(id);
+  store.set("favs", [...favs]);
+  $("#dFav").textContent = favs.has(id) ? "في المفضلة ♥" : "أضف للمفضلة";
+  toast(favs.has(id) ? "أُضيف إلى المفضلة" : "أُزيل من المفضلة");
+  renderShelves($("#q").value);
+};
+function renderList(){
+  const f = $("#dFilter").value.trim();
+  const list = moshafSurahs(dr.r, dr.m).filter(n => !f || SURAHS[n-1].includes(f) || String(n)===f);
+  $("#surahList").innerHTML = list.map(n=>`<li><button data-n="${n}"><span class="no"><i>${ar(n)}</i></span><span class="sn">${SURAHS[n-1]}</span><span class="pl">${MEDINAN.has(n)?"مدنية":"مكية"}</span></button></li>`).join("") || `<li class="empty">لا توجد سورة بهذا الاسم.</li>`;
+  $("#surahList").querySelectorAll("button").forEach(b=>b.onclick=()=>playSurah(dr.r, dr.m, +b.dataset.n));
+  markList();
+}
+function markList(){
+  document.querySelectorAll("#surahList button").forEach(b=>{
+    b.classList.toggle("cur", !!(cur.r && dr.r && cur.r.id===dr.r.id && cur.m===dr.m && +b.dataset.n===cur.s));
+  });
+}
+
+/* ---------- stations ---------- */
+function renderStations(){
+  $("#stations").innerHTML = STATIONS.map((s,i)=>`<button class="station" data-i="${i}"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-5.6-3.6 1.4 1.4a6 6 0 0 0 0 8.4l-1.4 1.4a8 8 0 0 1 0-11.2Zm11.2 0a8 8 0 0 1 0 11.2l-1.4-1.4a6 6 0 0 0 0-8.4l1.4-1.4Z"/></svg></span><span><b>${s.name}</b><small>${s.sub}</small></span></button>`).join("");
+  $("#stations").querySelectorAll(".station").forEach(b=>b.onclick=()=>{ const s=STATIONS[+b.dataset.i]; playLive(s.url, s.name, s.sub); });
+}
+function markStations(){ document.querySelectorAll(".station").forEach(b=>b.classList.toggle("on", STATIONS[+b.dataset.i].url===cur.live)); }
+
+/* ---------- quiz ---------- */
+const CLIP = 20; // seconds per question
+const POOL = Array.from({length:37},(_,i)=>78+i); // juz' Amma
+const quiz = {on:false, round:0, right:0, answer:0, timer:null, t0:0, best:store.get("best",0)};
+$("#sBest").textContent = ar(quiz.best);
+const shuffle = a => a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+
+function nextQuestion(){
+  if(quiz.round>=10) return endQuiz();
+  quiz.round++;
+  const pool = RECITERS.filter(r=>!r.moshaf[0][2]);
+  const r = pool[Math.floor(Math.random()*pool.length)];
+  const s = POOL[Math.floor(Math.random()*POOL.length)];
+  quiz.answer = s;
+  const opts = shuffle([s, ...shuffle(POOL.filter(x=>x!==s)).slice(0,3)]);
+  $("#qReciter").textContent = "بصوت " + r.name;
+  $("#qMsg").textContent = "استمع…";
+  $("#sRound").textContent = ar(quiz.round) + "/١٠";
+  $("#choices").innerHTML = opts.map(n=>`<button class="choice" data-n="${n}">${SURAHS[n-1]}</button>`).join("");
+  $("#choices").querySelectorAll(".choice").forEach(b=>b.onclick=()=>answer(+b.dataset.n));
+  $("#qStart").hidden = true;
+  cur = {r:null,m:0,s:1,live:null};
+  audio.src = srcOf(r, 0, s);
+  audio.currentTime = 0;
+  audio.play().catch(()=>{ $("#qMsg").textContent="تعذّر التشغيل، اضغط ابدأ مرة أخرى"; $("#qStart").hidden=false; });
+  $("#pTitle").textContent = "سورة ؟";
+  $("#pSub").textContent = "الاختبار · " + r.name;
+  quiz.t0 = 0;
+  clearInterval(quiz.timer);
+  quiz.timer = setInterval(()=>{
+    const t = audio.currentTime;
+    $("#qBar").style.width = Math.min(100, t/CLIP*100) + "%";
+    $("#qTime").textContent = ar(Math.max(0, Math.ceil(CLIP - t))) + " ث";
+    if(t>=CLIP) answer(0);
+  }, 200);
+}
+function answer(n){
+  clearInterval(quiz.timer);
+  audio.pause();
+  const ok = n===quiz.answer;
+  if(ok) quiz.right++;
+  $("#sRight").textContent = ar(quiz.right);
+  $("#choices").querySelectorAll(".choice").forEach(b=>{
+    b.disabled = true;
+    if(+b.dataset.n===quiz.answer) b.classList.add("right");
+    else if(+b.dataset.n===n) b.classList.add("wrong");
+  });
+  $("#qMsg").textContent = ok ? "أحسنت، هذه سورة " + SURAHS[quiz.answer-1] : (n ? "ليست هي. " : "انتهى الوقت. ") + "الإجابة: سورة " + SURAHS[quiz.answer-1];
+  $("#pTitle").textContent = "سورة " + SURAHS[quiz.answer-1];
+  $("#qStart").textContent = quiz.round>=10 ? "عرض النتيجة" : "السؤال التالي";
+  $("#qStart").hidden = false;
+}
+function endQuiz(){
+  quiz.on = false;
+  if(quiz.right>quiz.best){ quiz.best=quiz.right; store.set("best",quiz.best); $("#sBest").textContent=ar(quiz.best); }
+  const r = quiz.right;
+  $("#qReciter").textContent = "انتهى الاختبار";
+  $("#qTime").textContent = "";
+  $("#choices").innerHTML = "";
+  $("#qMsg").textContent = `نتيجتك ${ar(r)} من ١٠. ` + (r>=9?"أذن حافظ متمكّن.":r>=6?"نتيجة طيبة، واصل الاستماع.":"جزء عمّ يحتاج جلسة استماع أخرى.");
+  $("#qStart").textContent = "أعد الاختبار";
+  $("#qStart").hidden = false;
+}
+function stopQuiz(silent){
+  if(!quiz.on) return;
+  quiz.on = false; clearInterval(quiz.timer);
+  $("#qStart").textContent = "ابدأ الاختبار"; $("#qStart").hidden = false;
+  $("#choices").innerHTML = ""; $("#qBar").style.width = "0";
+  $("#qReciter").textContent = "اضغط «ابدأ» لتسمع المقطع الأول"; $("#qTime").textContent = "";
+  if(!silent) $("#qMsg").textContent = "";
+  else $("#qMsg").textContent = "توقف الاختبار لأنك شغّلت تلاوة أخرى.";
+}
+$("#qStart").onclick = () => {
+  if(!quiz.on || quiz.round>=10 && $("#qStart").textContent==="أعد الاختبار"){
+    quiz.on = true; quiz.round = 0; quiz.right = 0; $("#sRight").textContent = "٠";
+  }
+  if(quiz.round>=10) return endQuiz();
+  nextQuestion();
+};
+
+/* ---------- init ---------- */
+renderShelves();
+renderStations();
+$("#fReciters").textContent = ar(RECITERS.length);
+$("#fStations").textContent = ar(STATIONS.length);
+const last = store.get("last", null);
+if(last){
+  const r = RECITERS.find(x=>x.id===last.id);
+  if(r){
+    cur = {r, m:last.m||0, s:last.s||1, live:null};
+    audio.src = srcOf(r, cur.m, cur.s);
+    $("#pTitle").textContent = "سورة " + SURAHS[cur.s-1];
+    $("#pSub").textContent = r.name + " · تابع من حيث توقفت";
+    $("#pArt").textContent = SURAHS[cur.s-1][0];
+    renderShelves();
+  }
+}
+</script>
+</body>
+</html>
